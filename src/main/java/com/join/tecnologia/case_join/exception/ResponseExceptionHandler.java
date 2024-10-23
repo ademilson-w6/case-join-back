@@ -27,7 +27,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ConstraintViolationException.class})
     protected ResponseEntity<Object> erroValidacao(
             ConstraintViolationException ex, WebRequest request) {
-        String message = ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(", "));
+        String message = ex.getConstraintViolations().stream().map(violation -> String.format("%s: %s", violation.getPropertyPath(), violation.getMessage())).collect(Collectors.joining(", "));
         log.error("Erro de validação encontrado: {}", message);
         return handleExceptionInternal(ex, ErrorResponse.builder().message(message).build(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
@@ -36,6 +36,13 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> categoriaInativa(
             CategoriaInativaException ex, WebRequest request) {
         log.error("Erro de categoria inativa: {}", ex.getMessage());
+        return handleExceptionInternal(ex, ErrorResponse.builder().message(ex.getMessage()).build(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {CategoriaComProdutoException.class})
+    protected ResponseEntity<Object> categoriaComProduto(
+            CategoriaComProdutoException ex, WebRequest request) {
+        log.error("Erro ao deletar categoria: {}", ex.getMessage());
         return handleExceptionInternal(ex, ErrorResponse.builder().message(ex.getMessage()).build(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 

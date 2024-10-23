@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
-@RequestMapping(value = "/api/produto")
+@RequestMapping(value = "/api/produtos")
 @CrossOrigin(origins = "*")
 @Slf4j
 public class ProdutoController extends BaseController<Produto, ProdutoService> {

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -14,6 +15,12 @@ import java.util.List;
 public class BaseServiceImpl<T extends BaseModel, K extends JpaRepository<T, Long>> implements BaseService<T> {
 
     protected final K repository;
+
+    @SuppressWarnings("unchecked")
+    protected Class<T> getEntityClass() {
+        return (Class<T>) ((ParameterizedType) getClass()
+                .getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     @Override
     public void deletar(Long id) {
@@ -50,8 +57,9 @@ public class BaseServiceImpl<T extends BaseModel, K extends JpaRepository<T, Lon
 
     protected void verificar(Long id) {
         if (repository.findById(id).isEmpty()) {
-            log.error("Não foi encontrada a entidade com o ID: " + id);
-            throw new EntidadeException("Não foi encontrada a entidade");
+            String entityName = getEntityClass().getSimpleName();
+            log.error("Não foi encontrada a entidade com o ID: " + id + " para a classe: " + entityName);
+            throw new EntidadeException("Não foi encontrada a entidade: " + entityName + " com o ID: " + id);
         }
     }
 

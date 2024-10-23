@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.join.tecnologia</groupId>
-	<artifactId>case-join</artifactId>
+	<artifactId>case-join-back</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>case-join</name>
 	<description>Demo project for Spring Boot</description>
