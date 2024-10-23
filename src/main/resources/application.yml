@@ -1,0 +1,21 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /case-join
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/case-join
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+
+logging:
+  level:
+    org.springframework.security: TRACE
