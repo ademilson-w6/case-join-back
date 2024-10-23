@@ -1,10 +1,15 @@
 package com.join.tecnologia.case_join.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.join.tecnologia.case_join.commons.BaseModel;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,17 +23,26 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id"}, callSuper = false)
-public class Categoria {
+@EqualsAndHashCode(callSuper = true)
+public class Categoria extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotEmpty
     private String nome;
+
     private String descricao;
 
-    @OneToMany(mappedBy = "categoria")
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 1)
+    private Integer indAtiva;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Produto> produtos;
+
+    @Transient
+    public boolean isAtiva() {
+        return (indAtiva != null && indAtiva == 1);
+    }
 
 }
