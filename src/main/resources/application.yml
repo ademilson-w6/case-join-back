@@ -1,3 +1,8 @@
+api:
+  security:
+    token:
+      secret: df&EC6OMQOtR6mjG97fnrpsh#IPE%gIXK3S3gnm5
+
 server:
   port: 9000
   servlet:
