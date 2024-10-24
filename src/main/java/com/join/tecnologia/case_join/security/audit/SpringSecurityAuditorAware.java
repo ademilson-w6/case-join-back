@@ -1,4 +1,4 @@
-package com.join.tecnologia.case_join.security;
+package com.join.tecnologia.case_join.security.audit;
 
 import com.join.tecnologia.case_join.model.Usuario;
 import lombok.RequiredArgsConstructor;

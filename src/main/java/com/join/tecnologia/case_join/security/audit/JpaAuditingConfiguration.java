@@ -1,4 +1,4 @@
-package com.join.tecnologia.case_join.security;
+package com.join.tecnologia.case_join.security.audit;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
