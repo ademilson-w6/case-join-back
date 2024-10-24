@@ -29,6 +29,8 @@ public class Produto extends BaseModel {
     @NotEmpty
     private String nome;
 
+    private String sku;
+
     private String descricao;
 
     @NotNull
