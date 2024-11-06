@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  app:
+    image: case-join-back
+    build:
+      context: .
+    ports:
+      - "8080:9000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/case-join
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - db
+    networks:
+      - apinetwork
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: case-join
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - apinetwork
+    ports:
+      - "5432:5432"
+
+networks:
+  apinetwork:
+    driver: bridge
+
